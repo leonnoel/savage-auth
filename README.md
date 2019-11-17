@@ -1,3 +1,12 @@
+# Savage Fan Site with Login Page 
+
+## Goal: Create a 21 Savage fan site where users can create an account, login and add messages to a fan messages board. Messages on the board can then be upvoted or down voted. 
+
+![21 Savage Home Page](savage-home.png)
+
+![alt-text](savage-login.png)
+
+
 ## Installation
 
 1. Clone repo
