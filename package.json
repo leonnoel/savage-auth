@@ -9,7 +9,7 @@
     "ejs": "~2.5.2",
     "express": "^4.16.4",
     "express-session": "^1.15.6",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "method-override": "~2.3.6",
     "mongodb": "^3.3.4",
     "mongoose": ">=5.7.5",
