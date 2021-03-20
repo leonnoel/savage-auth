@@ -1,0 +1,133 @@
+/******************************************
+/* SETUP
+/*******************************************/
+
+/* Box Model Hack */
+*{
+  box-sizing: border-box;
+}
+
+/* Clear fix hack */
+.clearfix:after {
+     content: ".";
+     display: block;
+     clear: both;
+     visibility: hidden;
+     line-height: 0;
+     height: 0;
+}
+
+.clear {
+	clear: both;
+}
+
+.alignright {
+	float: right;
+	padding: 0 0 10px 10px; /* note the padding around a right floated image */
+}
+
+.alignleft {
+	float: left;
+	padding: 0 10px 10px 0; /* note the padding around a left floated image */
+}
+
+/******************************************
+/* BASE STYLES
+/*******************************************/
+
+
+
+body{
+    margin:0px;
+    padding:0px;
+}
+
+.game td
+{
+    width:100px;
+    height:100px;
+    border: solid 5px black;
+    text-align:center;
+    font-size:40pt;
+    border-radius:10px;
+    box-sizing:border-box;
+}
+
+.game td:hover
+{
+    background-color: #fff;
+    cursor:pointer;
+}
+
+.game
+{
+    background: #fbd3d1;
+    border:solid 10px #81ef93;
+    width: 55%;
+    margin: auto;
+
+}
+
+.game .game-title
+{
+    background:#222;
+    color:#fff;
+    padding: 10px;
+    text-align:center;
+}
+
+.game .player
+{
+    float:left;
+    text-align:center;
+    font-size: 30px;
+    width: 25%;
+}
+
+#two
+{
+  float:right;
+  text-align: center;
+  font-size: 30px;
+  width: 25%;
+  margin-top: -308px;
+
+}
+
+.game .player .selected
+{
+    border-bottom:solid 4px #00fa9a;
+}
+
+
+.tictactoe-board
+{
+    text-align:center;
+    margin:0 auto;
+    width:50%;
+    padding-top:20px;
+}
+
+.tictactoe-board table
+{
+    float:left;
+    width: 50%;
+
+}
+
+.tictactoe-board-score1
+{
+    float:left;
+    width:20%;
+}
+
+.tictactoe-board-score2
+{
+    float:left;
+    width:20%;
+}
+
+.clear
+{
+    clear:both;
+}
