@@ -26,6 +26,11 @@ mongoose.connect(configDB.url, (err, database) => {
   require('./app/routes.js')(app, passport, db);
 }); // connect to our database
 
+
+
+
+
+
 require('./config/passport')(passport); // pass passport for configuration
 
 // set up our express application
