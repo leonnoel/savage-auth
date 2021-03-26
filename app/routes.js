@@ -9,6 +9,7 @@ module.exports = function(app, passport, db) {
 
     // PROFILE SECTION =========================
     app.get('/profile', isLoggedIn, function(req, res) {
+      console.log(req)
         db.collection('messages').find().toArray((err, result) => {
           if (err) return console.log(err)
           res.render('profile.ejs', {
