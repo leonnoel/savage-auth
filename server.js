@@ -1,19 +1,19 @@
 // server.js
 
 // set up ======================================================================
-// get all the tools we need
+// get all the tools we need // ps var ignores scope
 var express  = require('express');
 var app      = express();
 var port     = process.env.PORT || 8080;
 const MongoClient = require('mongodb').MongoClient
 var mongoose = require('mongoose');
-var passport = require('passport');
+var passport = require('passport');//for the login, it's a login module
 var flash    = require('connect-flash');
 
-var morgan       = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser   = require('body-parser');
-var session      = require('express-session');
+var morgan       = require('morgan'); //mackage help up to logging
+var cookieParser = require('cookie-parser'); //session keep person logged in
+var bodyParser   = require('body-parser');// get elements out of req body,
+var session      = require('express-session');//stay user stay logged in
 
 var configDB = require('./config/database.js');
 
@@ -33,13 +33,14 @@ app.use(morgan('dev')); // log every request to the console
 app.use(cookieParser()); // read cookies (needed for auth)
 app.use(bodyParser.json()); // get information from html forms
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static('public'))
+app.use(express.static('public'))//access things in the public folder to save time
 
 app.set('view engine', 'ejs'); // set up ejs for templating
 
 // required for passport
 app.use(session({
-    secret: 'rcbootcamp2019a', // session secret
+    secret: 'rcbootcamp2021a', // session secret
+
     resave: true,
     saveUninitialized: true
 }));

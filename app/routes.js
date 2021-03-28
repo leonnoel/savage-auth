@@ -9,6 +9,7 @@ module.exports = function(app, passport, db) {
 
     // PROFILE SECTION =========================
     app.get('/profile', isLoggedIn, function(req, res) {
+      console.log(req)
         db.collection('messages').find().toArray((err, result) => {
           if (err) return console.log(err)
           res.render('profile.ejs', {
@@ -34,11 +35,26 @@ module.exports = function(app, passport, db) {
       })
     })
 
-    app.put('/messages', (req, res) => {
-      db.collection('messages')
+    app.put('/messages', (req, res) => {//this is refering to the route that we refer to when we fetch
+      db.collection('messages') //this is not the route, this is the referring to the collection called messages on mongo
       .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
         $set: {
           thumbUp:req.body.thumbUp + 1
+        }
+      }, {
+        sort: {_id: -1},
+        upsert: true
+      }, (err, result) => {
+        if (err) return res.send(err)
+        res.send(result)
+      })
+    })
+
+    app.put('/thumbDown', (req, res) => { //this is refering to the route that we refer to when we fetch
+      db.collection('messages') //collection of messages on the db on MonogoDB so its the same
+      .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
+        $set: {
+          thumbUp:req.body.thumbUp - 1 //the thumbUp is the counter but it just named weird by Jeon
         }
       }, {
         sort: {_id: -1},
