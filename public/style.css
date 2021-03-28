@@ -5,3 +5,6 @@ body{
 img{
   height: 200px;
 }
+.fa-trash::before {
+    content: "\f014";
+}
