@@ -21,7 +21,14 @@ var db
 
 // configuration ===============================================================
 mongoose.connect(configDB.url, (err, database) => {
-  if (err) return console.log(err)
+  // If the "mongoose" library is unable to connect to the MongoDB instance, it
+  // will call this callback function and set the `err` parameter to an error
+  // object. Because this app can't work without a valid database connection,
+  // we display the error on the terminal and force the program to exit.
+  if (err) {
+    console.error(err);
+    process.exit(1);
+  }
   db = database
   require('./app/routes.js')(app, passport, db);
 }); // connect to our database
