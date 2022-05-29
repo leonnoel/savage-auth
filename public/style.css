@@ -1,7 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+
+*{
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+
 body{
   padding-top:80px;
   word-wrap:break-word;
 }
+
+#loginpage,#loginb,#profpage,#signpage{
+  text-align: center;
+  background-color:#ffb899;
+background-image:
+radial-gradient(at 8% 6%, hsla(120,67%,67%,1) 0px, transparent 50%),
+radial-gradient(at 38% 43%, hsla(13,91%,61%,1) 0px, transparent 50%),
+radial-gradient(at 40% 68%, hsla(357,94%,77%,1) 0px, transparent 50%),
+radial-gradient(at 34% 37%, hsla(239,97%,77%,1) 0px, transparent 50%),
+radial-gradient(at 39% 70%, hsla(144,69%,74%,1) 0px, transparent 50%),
+radial-gradient(at 94% 1%, hsla(126,87%,67%,1) 0px, transparent 50%),
+radial-gradient(at 46% 67%, hsla(316,86%,73%,1) 0px, transparent 50%);
+}
+
+h1{
+  font-weight: 200;
+  font-size: 50px;
+  padding-top: 30px;
+}
+
+.maincontainer,.logcontainer{
+  height: 400px;
+  background-color: rgba(255, 255, 255, 0.444);
+  width: 60%;
+  margin: auto;
+  border-radius: 7px;
+}
+
+.profcontainer{
+  height: 800px;
+  background-color: rgba(255, 255, 255, 0.444);
+  width: 60%;
+  margin: auto;
+  border-radius: 7px;
+}
+
+.profpage-header{
+  margin-bottom: 20px;
+}
+
 img{
   height: 200px;
+}
+
+a{
+  text-decoration: none;
+}
+
+input{
+  height: 40px;
+  width: 40%;
+  border: 0.5px solid grey;
+  padding-left: 5px;
+  border-radius: 5px;
+  font-size: 15px;
+  margin-bottom: 15px;
+}
+
+button{
+  width: 20%;
+  height: 40px;
+  font-size: 15px;
+  font-weight: 100;
+  border: none;
+  border-radius: 5px;
+  background: hsla(13,91%,61%,1);
+  color: white;
+}
+
+button:hover{
+  background: hsla(316,86%,73%,1);
+}
+
+.messages{
+  list-style: none;
+}
+
+
+.row{
+  height: 200px;
+  border: 1px solid hsla(316,86%,73%,1) ;
+  width: 85%;
+  margin: auto;
+  border-radius: 7px;
+}
+
+.col-sm-6{
+  margin-top: 30px;
 }
