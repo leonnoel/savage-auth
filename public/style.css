@@ -2,6 +2,26 @@ body{
   padding-top:80px;
   word-wrap:break-word;
 }
-img{
-  height: 200px;
+.btn{
+  display: inline-block;
+  outline: 0;
+  cursor: pointer;
+  border: 2px solid #000;
+  border-radius: 3px;
+  color: #fff;
+  background: #000;
+  font-size: 16px;
+  font-weight: 600;
+  /* line-height: 28px; */
+  text-align:center;
+  transition-duration: .15s;
+  transition-property: all;
+  transition-timing-function: cubic-bezier(.4,0,.2,1);
+}
+.btn:hover{
+    color: #000;
+    background: #fff;
+}
+.underline{
+  text-decoration: underline;
 }

@@ -1,4 +1,4 @@
-module.exports = function(app, passport, db) {
+module.exports = function(app, passport, db) { // sends function to server.js
 
 // normal routes ===============================================================
 
@@ -9,10 +9,10 @@ module.exports = function(app, passport, db) {
 
     // PROFILE SECTION =========================
     app.get('/profile', isLoggedIn, function(req, res) {
-        db.collection('messages').find().toArray((err, result) => {
+        db.collection('messages').find().toArray((err, result) => { // uses the db connection 
           if (err) return console.log(err)
           res.render('profile.ejs', {
-            user : req.user,
+            user : req.user, //use to just show profile name
             messages: result
           })
         })
@@ -49,6 +49,21 @@ module.exports = function(app, passport, db) {
       })
     })
 
+    app.put('/messagesDown', (req, res) => {
+      db.collection('messages')
+      .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
+        $set: {
+          thumbUp:req.body.thumbUp - 1
+        }
+      }, {
+        sort: {_id: -1},
+        upsert: true
+      }, (err, result) => {
+        if (err) return res.send(err)
+        res.send(result)
+      })
+    })
+
     app.delete('/messages', (req, res) => {
       db.collection('messages').findOneAndDelete({name: req.body.name, msg: req.body.msg}, (err, result) => {
         if (err) return res.send(500, err)
@@ -58,7 +73,7 @@ module.exports = function(app, passport, db) {
 
 // =============================================================================
 // AUTHENTICATE (FIRST LOGIN) ==================================================
-// =============================================================================
+// =============================================================================PDNT
 
     // locally --------------------------------
         // LOGIN ===============================
@@ -96,7 +111,7 @@ module.exports = function(app, passport, db) {
 
     // local -----------------------------------
     app.get('/unlink/local', isLoggedIn, function(req, res) {
-        var user            = req.user;
+        let user            = req.user;
         user.local.email    = undefined;
         user.local.password = undefined;
         user.save(function(err) {

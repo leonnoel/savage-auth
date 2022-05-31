@@ -1,10 +1,11 @@
 // config/passport.js
 
 // load all the things we need
-var LocalStrategy   = require('passport-local').Strategy;
+const LocalStrategy   = require('passport-local').Strategy;
 
 // load up the user model
-var User       		= require('../app/models/user');
+const User       		= require('../app/models/user');
+//talk to database through model in models/user.js MVC format
 
 // expose this function to our app using module.exports
 module.exports = function(passport) {
@@ -55,11 +56,11 @@ module.exports = function(passport) {
 
 				// if there is no user with that email
                 // create the user
-                var newUser            = new User();
+                const newUser            = new User();
 
                 // set the user's local credentials
                 newUser.local.email    = email;
-                newUser.local.password = newUser.generateHash(password); // use the generateHash function in our user model
+                newUser.local.password = newUser.generateHash(password); // use the generateHash function in our user model not stored in plain text
 
 				// save the user
                 newUser.save(function(err) {
@@ -88,7 +89,7 @@ module.exports = function(passport) {
     function(req, email, password, done) { // callback with email and password from our form
 
         // find a user whose email is the same as the forms email
-        // we are checking to see if the user trying to login already exists
+        // we are checking to see if the user trying to login already exists!!!
         User.findOne({ 'local.email' :  email }, function(err, user) {
             // if there are any errors, return the error before anything else
             if (err)

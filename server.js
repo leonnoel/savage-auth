@@ -2,45 +2,48 @@
 
 // set up ======================================================================
 // get all the tools we need
-var express  = require('express');
-var app      = express();
-var port     = process.env.PORT || 8080;
+const express  = require('express');
+const app      = express();
+const port     = process.env.PORT || 8080;
 const MongoClient = require('mongodb').MongoClient
-var mongoose = require('mongoose');
-var passport = require('passport');
-var flash    = require('connect-flash');
+const mongoose = require('mongoose'); // different way of talking to databse
+const passport = require('passport');
+const flash    = require('connect-flash'); //error message
 
-var morgan       = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser   = require('body-parser');
-var session      = require('express-session');
+const morgan       = require('morgan'); //logs every request on app
+const cookieParser = require('cookie-parser'); //helps look at cookies
+const bodyParser   = require('body-parser');
+const session      = require('express-session'); //once user logs in, you want to make sure they are still logged in. whn they log out it is terminated. jump around from page to page w/o logging out
 
-var configDB = require('./config/database.js');
+const configDB = require('./config/database.js'); //object that has url property and db property in this file
 
-var db
+let db
 
 // configuration ===============================================================
-mongoose.connect(configDB.url, (err, database) => {
-  if (err) return console.log(err)
-  db = database
-  require('./app/routes.js')(app, passport, db);
-}); // connect to our database
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useUnifiedTopology', true);
 
+mongoose.connect(configDB.url, (err, database) => { //connecting to database. pass in url from configdb
+  if (err) return console.log(err)
+  db = database //connection to database is stored in db
+  require('./app/routes.js')(app, passport, db); //run function from routes js
+  //creates API for app
+}); // connect to our database
 require('./config/passport')(passport); // pass passport for configuration
 
 // set up our express application
 app.use(morgan('dev')); // log every request to the console
 app.use(cookieParser()); // read cookies (needed for auth)
 app.use(bodyParser.json()); // get information from html forms
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true })); // use to get url
 app.use(express.static('public'))
 
 
 app.set('view engine', 'ejs'); // set up ejs for templating
 
 // required for passport
-app.use(session({
-    secret: 'rcbootcamp2021b', // session secret
+app.use(session({ // stay logged in
+    secret: 'rcbootcamp2021b', // session secret-- makes the session unique while logged in
     resave: true,
     saveUninitialized: true
 }));
