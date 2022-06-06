@@ -4,7 +4,7 @@
 
 ## Language Used
 
-This was created using HTML5, CSS3, JavaScript, MongoDB, and Node.js.
+This was created using EJS, CSS3, JavaScript, MongoDB, and Node.js.
 
 The assignment was to make all the buttons functional and understand that passport is used to create and use log ins for users. The users and message board posts are stored in MongoDB. I used bootstrap to style the site. 
 
