@@ -1,3 +1,4 @@
+// exporting my code so i can use it somewhere else
 module.exports = function(app, passport, db) {
 
 // normal routes ===============================================================
@@ -9,9 +10,12 @@ module.exports = function(app, passport, db) {
 
     // PROFILE SECTION =========================
     app.get('/profile', isLoggedIn, function(req, res) {
+      // database.collection, find something that i am going to tell you to find
         db.collection('messages').find().toArray((err, result) => {
           if (err) return console.log(err)
+          console.log(result)
           res.render('profile.ejs', {
+            // throw the information inside of profile.ejs
             user : req.user,
             messages: result
           })
@@ -20,7 +24,9 @@ module.exports = function(app, passport, db) {
 
     // LOGOUT ==============================
     app.get('/logout', function(req, res) {
-        req.logout();
+        req.logout(() => {
+          console.log('User has been logged out!')
+        });
         res.redirect('/');
     });
 
@@ -34,11 +40,26 @@ module.exports = function(app, passport, db) {
       })
     })
 
-    app.put('/messages', (req, res) => {
+    app.put('/thumbup', (req, res) => {
       db.collection('messages')
       .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
         $set: {
-          thumbUp:req.body.thumbUp + 1
+          thumbUp:req.body.thumbUp + 1,
+        }
+      }, {
+        sort: {_id: -1},
+        upsert: true
+      }, (err, result) => {
+        if (err) return res.send(err)
+        res.send(result)
+      })
+    })
+
+    app.put('/thumbdown', (req, res) => {
+      db.collection('messages')
+      .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
+        $set: {
+          thumbUp:req.body.thumbUp - 1,
         }
       }, {
         sort: {_id: -1},
