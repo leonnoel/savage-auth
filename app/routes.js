@@ -20,7 +20,9 @@ module.exports = function(app, passport, db) {
 
     // LOGOUT ==============================
     app.get('/logout', function(req, res) {
-        req.logout();
+        req.logout(() => {
+          console.log('User has logged out!')
+        });
         res.redirect('/');
     });
 
