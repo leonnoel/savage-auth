@@ -2,32 +2,33 @@
 
 // set up ======================================================================
 // get all the tools we need
-var express  = require('express');
-var app      = express();
-var port     = process.env.PORT || 8080;
+const express  = require('express');
+const app      = express();
+const port     = process.env.PORT || 8080;
 const MongoClient = require('mongodb').MongoClient
-var mongoose = require('mongoose');
-var passport = require('passport');
-var flash    = require('connect-flash');
+const mongoose = require('mongoose');
+const passport = require('passport');
+const flash    = require('connect-flash');
+mongoose.set('useUnifiedTopology', true)
+mongoose.set('useNewUrlParser', true)
+let morgan       = require('morgan');
+let cookieParser = require('cookie-parser');
+let bodyParser   = require('body-parser');
+let session      = require('express-session');
 
-var morgan       = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser   = require('body-parser');
-var session      = require('express-session');
+let configDB = require('./config/database.js');
 
-var configDB = require('./config/database.js');
-
-var db
+let db
 
 // configuration ===============================================================
 mongoose.connect(configDB.url, (err, database) => {
   if (err) return console.log(err)
   db = database
   require('./app/routes.js')(app, passport, db);
-}); // connect to our database
+    });
+ // connect to our database
 
 require('./config/passport')(passport); // pass passport for configuration
-
 // set up our express application
 app.use(morgan('dev')); // log every request to the console
 app.use(cookieParser()); // read cookies (needed for auth)
