@@ -20,8 +20,8 @@ module.exports = function(app, passport, db) {
 
     // LOGOUT ==============================
     app.get('/logout', function(req, res) {
-        req.logout(() => {
-          console.log('User has logged out!')
+        req.logout(() =>{
+          console.log('user has logged out')
         });
         res.redirect('/');
     });
@@ -41,6 +41,21 @@ module.exports = function(app, passport, db) {
       .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
         $set: {
           thumbUp:req.body.thumbUp + 1
+        }
+      }, {
+        sort: {_id: -1},
+        upsert: true
+      }, (err, result) => {
+        if (err) return res.send(err)
+        res.send(result)
+      })
+    })
+    
+    app.put('/messages1', (req, res) => {
+      db.collection('messages')
+      .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
+        $set: {
+          thumbDown:req.body.thumbDown + 1
         }
       }, {
         sort: {_id: -1},
