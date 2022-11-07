@@ -1,13 +1,27 @@
-## Installation
+# Savage-Auth
 
-1. Clone repo
-2. run `npm install`
+This is a fullstack web application that serves as a 21 Savage Fan Site. 
 
-## Usage
 
-1. run `node server.js`
-2. Navigate to `localhost:8080`
 
-## Credit
 
-Modified from Scotch.io's auth tutorial
+## Tech Stack
+
+**Client:** JS, HTML, CSS, Express, Bootstrap
+
+**Server-Side**: Node.js, MongoDB
+
+
+
+
+## Lessons Learned
+
+
+I'm starting to love my project!
+
+5 - I feel confident about my code.
+4 - I feel like this is a learning journey and I can constantly do better. 
+
+## Optimization 
+
+- Styling
