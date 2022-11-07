@@ -16,9 +16,6 @@ This is a fullstack web application that serves as a 21 Savage Fan Site.
 
 ## Lessons Learned
 
-
-I'm starting to love my project!
-
 5 - I feel confident about my code.
 4 - I feel like this is a learning journey and I can constantly do better. 
 
