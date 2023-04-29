@@ -51,12 +51,31 @@ module.exports = function(app, passport, db) {
       })
     })
 
+    app.put('/messagesThumbsDown', (req, res) => {
+      db.collection('messages')
+      .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
+        $set: {
+          thumbUp:req.body.thumbUp - 1
+        }
+     
+      }, 
+      
+      {
+        sort: {_id: -1},
+        upsert: true
+      }, (err, result) => {
+        if (err) return res.send(err)
+        res.send(result)
+      })
+    })
+    
     app.delete('/messages', (req, res) => {
       db.collection('messages').findOneAndDelete({name: req.body.name, msg: req.body.msg}, (err, result) => {
         if (err) return res.send(500, err)
         res.send('Message deleted!')
       })
     })
+    
 
 // =============================================================================
 // AUTHENTICATE (FIRST LOGIN) ==================================================
