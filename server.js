@@ -4,20 +4,20 @@
 // get all the tools we need
 var express  = require('express');
 var app      = express();
-var port     = process.env.PORT || 8080;
+var port     = process.env.PORT || 8080; //where the port is 
 const MongoClient = require('mongodb').MongoClient
-var mongoose = require('mongoose');
-var passport = require('passport');
+var mongoose = require('mongoose'); //another way of talking to mongo =db 
+var passport = require('passport'); //
 var flash    = require('connect-flash');
+//everything in parentheses is packages
+var morgan       = require('morgan');  //morgan is our logger, shows the requests in terinal and tells us whats working and not working
+var cookieParser = require('cookie-parser'); //keeps us logged in
+var bodyParser   = require('body-parser'); // 
+var session      = require('express-session'); //keeps the open logged in session
 
-var morgan       = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser   = require('body-parser');
-var session      = require('express-session');
-
-var configDB = require('./config/database.js');
-
-var db
+var configDB = require('./config/database.js'); // how we are pulling the bd
+//when we see configDB it's really the object that your getting 
+var db //global variable for dB
 
 // configuration ===============================================================
 mongoose.connect(configDB.url, (err, database) => {
@@ -26,7 +26,7 @@ mongoose.connect(configDB.url, (err, database) => {
   require('./app/routes.js')(app, passport, db);
 }); // connect to our database
 
-require('./config/passport')(passport); // pass passport for configuration
+require('./config/passport')(passport); // pass passport for configuration --this is a function call-- the next parenthesis is you running the functionthe 
 
 // set up our express application
 app.use(morgan('dev')); // log every request to the console
