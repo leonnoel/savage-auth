@@ -54,7 +54,7 @@
         <h2>Add a message</h2>
         <% if (user.local.email) { %>
           <form action="/messages" method="POST">
-            <input type="text" value="<%= user.local.email %>" name="name">
+            <input type="text" value="<%=user.local.email%>" name="name">
             <input type="text" placeholder="message" name="msg">
             <button type="submit">Submit</button>
           </form>

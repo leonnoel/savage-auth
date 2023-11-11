@@ -35,6 +35,7 @@ module.exports = function (app, passport, db) {
     );
   });
   app.put("/messages", (req, res) => {
+    console.log(req);
     db.collection("messages").findOneAndUpdate(
       { name: req.body.name, msg: req.body.msg },
       {
