@@ -7,13 +7,16 @@ module.exports = function(app, passport, db) {
         res.render('index.ejs');
     });
 
-    // PROFILE SECTION =========================
+    // PROFILE SECTION ========================= isLoggedIn to ensure the user is logged in
     app.get('/profile', isLoggedIn, function(req, res) {
         db.collection('messages').find().toArray((err, result) => {
+
+          let sortedResult = result.sort((a,b) => (b.thumbUp - b.thumbDown) - (a.thumbUp - a.thumbDown))
+
           if (err) return console.log(err)
           res.render('profile.ejs', {
             user : req.user,
-            messages: result
+            messages: sortedResult
           })
         })
     });
@@ -37,10 +40,17 @@ module.exports = function(app, passport, db) {
     })
 
     app.put('/messages', (req, res) => {
+      const upOrDown = req.body.hasOwnProperty('thumbDown') ? 'thumbDown' : 'thumbUp'
       db.collection('messages')
       .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
-        $set: {
-          thumbUp:req.body.thumbUp + 1
+        // $set: {
+        //   thumbUp:req.body.thumbUp + 1
+        // }
+        $inc: { //$sets something from the database and the code below allows us to SET the thumbs up to its value
+          //the mongoDB docs state that using $inc with .updateOne() will increase metrics by one. thats why we use [upOrDown]: 1 
+          //thumbUp:req.body.thumbUp + 1,
+          //in brackets to specify the key (property name) for the object being updated in the database
+          [upOrDown]: 1,
         }
       }, {
         sort: {_id: -1},

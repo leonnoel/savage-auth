@@ -1,7 +1,26 @@
+*{
+  font-family: Space Grotesk;
+}
+
 body{
   padding-top:80px;
   word-wrap:break-word;
+  background-color: black;
+  color: white;
 }
 img{
   height: 200px;
 }
+
+h1, h2, h3{
+  font-family: Space Grotesk;
+}
+
+.well{
+  background-color: gray;
+}
+
+.jumbotron{
+  background-color:gray;
+}
+
