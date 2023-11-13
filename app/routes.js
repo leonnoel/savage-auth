@@ -29,7 +29,7 @@ module.exports = function(app, passport, db) {
 // message board routes ===============================================================
 
     app.post('/messages', (req, res) => {
-      db.collection('messages').save({name: req.body.name, msg: req.body.msg, thumbUp: 0, thumbDown:0}, (err, result) => {
+      db.collection('messages').save({name: req.body.name, msg: req.body.msg, thumb: 0}, (err, result) => {
         if (err) return console.log(err)
         console.log('saved to database')
         res.redirect('/profile')
@@ -40,7 +40,22 @@ module.exports = function(app, passport, db) {
       db.collection('messages')
       .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
         $set: {
-          thumbUp:req.body.thumbUp + 1
+          thumb:req.body.thumb + 1
+        }
+      }, {
+        sort: {_id: -1},
+        upsert: true
+      }, (err, result) => {
+        if (err) return res.send(err)
+        res.send(result)
+      })
+    })
+
+    app.put('/messages/down', (req, res) => {
+      db.collection('messages')
+      .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
+        $set: {
+          thumb:req.body.thumb - 1
         }
       }, {
         sort: {_id: -1},
@@ -106,6 +121,15 @@ module.exports = function(app, passport, db) {
         });
     });
 
+    app.get('/connect-local', function(req, res) {
+      res.render('connect-local.ejs', { message: req.flash('signupMessage') });
+    });
+
+    app.post('/connect/local', passport.authenticate('local-signup', {
+      successRedirect : '/profile', // redirect to the secure profile section
+      failureRedirect : '/connect-local', // redirect back to the signup page if there is an error
+      failureFlash : true // allow flash messages
+  }));
 };
 
 // route middleware to ensure user is logged in
