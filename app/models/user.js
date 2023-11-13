@@ -30,7 +30,7 @@ var userSchema = mongoose.Schema({
 
 });
 
-// generating a hash
+// generating a hash - encrypting of password
 userSchema.methods.generateHash = function(password) {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
 };
