@@ -11,7 +11,7 @@ module.exports = function(app, passport, db) {
     // isLoggedIn middleware is function that checks if user is logged in. Wherever you put it, the user must log in to do whatever
     app.get('/profile', isLoggedIn, function(req, res) {
         
-        db.collection('messages').find().toArray((err, result) => {
+        db.collection('messages').find().sort({ thumb: -1 }).toArray((err, result) => {
             if (err) return console.log(err)
             res.render('profile.ejs', {
                 user: req.user,
