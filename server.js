@@ -6,7 +6,7 @@ var express  = require('express');
 var app      = express();
 var port     = process.env.PORT || 8080;
 const MongoClient = require('mongodb').MongoClient
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 var passport = require('passport');
 var flash    = require('connect-flash');
 
@@ -20,6 +20,9 @@ var configDB = require('./config/database.js');
 var db
 
 // configuration ===============================================================
+
+mongoose.set('useNewUrlParser', true)
+mongoose.set('useUnifiedTopology', true)
 mongoose.connect(configDB.url, (err, database) => {
   if (err) return console.log(err)
   db = database
