@@ -15,14 +15,14 @@ module.exports = function(passport) {
     // required for persistent login sessions
     // passport needs ability to serialize and unserialize users out of session
 
-    // used to serialize the user for the session
+    // used to serialize the user for the session- the user stays logged inn
     passport.serializeUser(function(user, done) {
         done(null, user.id);
     });
 
     // used to deserialize the user
     passport.deserializeUser(function(id, done) {
-        User.findById(id, function(err, user) {
+        User.findById(id, function(err, user) { // See if the person exists
             done(err, user);
         });
     });
@@ -50,18 +50,18 @@ module.exports = function(passport) {
 
             // check to see if theres already a user with that email
             if (user) {
-                return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
+                return done(null, false, req.flash('signupMessage', 'That email is already taken.')); // Edit the error message here
             } else {
 
 				// if there is no user with that email
                 // create the user
-                var newUser            = new User();
+                var newUser            = new User(); // Create a new document i the user collection
 
-                // set the user's local credentials
+                // set the user's local credentials- add boolean and update user.js if you want different user accounts (teacher vs student)
                 newUser.local.email    = email;
                 newUser.local.password = newUser.generateHash(password); // use the generateHash function in our user model
 
-				// save the user
+				// save the user to our database
                 newUser.save(function(err) {
                     if (err)
                         throw err;

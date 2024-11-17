@@ -4,7 +4,7 @@
     <title>21 Savage Fan Site</title>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/Savage-Authentication/savage-auth/public/style.css">
 </head>
 <body>
 <div class="container">
@@ -12,8 +12,8 @@
 
     <h1><span class="fa fa-sign-in"></span> Login</h1>
 
-    <% if (message.length > 0) { %>
-        <div class="alert alert-danger"><%= message %></div>
+    <% if (message.length > 0) { %> <!--message is a variable and a parameter to the EJS page. What are we using this variable for?-->
+        <div class="alert alert-danger"><%= message %></div> <!--Ask Leon about this. May-->
     <% } %>
 
     <!-- LOGIN FORM -->

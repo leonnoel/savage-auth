@@ -8,12 +8,12 @@ module.exports = function(app, passport, db) {
     });
 
     // PROFILE SECTION =========================
-    app.get('/profile', isLoggedIn, function(req, res) {
-        db.collection('messages').find().toArray((err, result) => {
+    app.get('/profile', isLoggedIn, function(req, res) { // This is the router 
+        db.collection('messages').find().toArray((err, result) => { // This is the controller - "If the get /profile hears a request go talk to this controller"
           if (err) return console.log(err)
-          res.render('profile.ejs', {
-            user : req.user,
-            messages: result
+          res.render('profile.ejs', { // Pass into to the profile.ejs. This sets the header to HTML
+            user : req.user, // pass eveyrthing about the user here off of the req object. Automatically passed through with each request; can console.log to see
+            messages: result // passing this into the ejs
           })
         })
     });
@@ -29,18 +29,21 @@ module.exports = function(app, passport, db) {
 // message board routes ===============================================================
 
     app.post('/messages', (req, res) => {
-      db.collection('messages').save({name: req.body.name, msg: req.body.msg, thumbUp: 0, thumbDown:0}, (err, result) => {
+      db.collection('messages').save({name: req.body.name, msg: req.body.msg, thumbUp: 0, thumbDown:0}, (err, result) => { // save a new document to database
         if (err) return console.log(err)
         console.log('saved to database')
-        res.redirect('/profile')
+        res.redirect('/profile') // This reloads the rootpage which triggers another GET request
       })
     })
 
     app.put('/messages', (req, res) => {
       db.collection('messages')
-      .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
+      .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, { // body is data I'm putting or posting
         $set: {
-          thumbUp:req.body.thumbUp + 1
+          // thumbUp:req.body.thumbUp + 1
+          // Why are we doing this below????
+          thumbUp:req.body.thumbUp != undefined ? req.body.thumbUp + 1 : req.body.thumbDown - 1
+          // The total value of both thumbs: If thumbs up is defined add 1, if not defined minus 1
         }
       }, {
         sort: {_id: -1},
@@ -66,8 +69,8 @@ module.exports = function(app, passport, db) {
         // LOGIN ===============================
         // show the login form
         app.get('/login', function(req, res) {
-            res.render('login.ejs', { message: req.flash('loginMessage') });
-        });
+            res.render('login.ejs', { message: req.flash('loginMessage') }); // Find out what flash method is
+        }); // User sees the response
 
         // process the login form
         app.post('/login', passport.authenticate('local-login', {
@@ -83,10 +86,10 @@ module.exports = function(app, passport, db) {
         });
 
         // process the signup form
-        app.post('/signup', passport.authenticate('local-signup', {
+        app.post('/signup', passport.authenticate('local-signup', { // looks in passport file , uses the user model on line 7, then look in user.js file (hash is here, you never want to store passwords in plain text. You always ant to hash it)
             successRedirect : '/profile', // redirect to the secure profile section
             failureRedirect : '/signup', // redirect back to the signup page if there is an error
-            failureFlash : true // allow flash messages
+            failureFlash : true // allow flash messages. Show the user why they failed
         }));
 
 // =============================================================================
@@ -109,9 +112,9 @@ module.exports = function(app, passport, db) {
 };
 
 // route middleware to ensure user is logged in
-function isLoggedIn(req, res, next) {
-    if (req.isAuthenticated())
-        return next();
+function isLoggedIn(req, res, next) { 
+    if (req.isAuthenticated()) // If authenticated return it
+        return next(); // Function built into express
 
-    res.redirect('/');
+    res.redirect('/'); // If not redirect the user to the homepage
 }
