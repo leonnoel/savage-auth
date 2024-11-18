@@ -35,8 +35,70 @@ app.use(bodyParser.json()); // get information from html forms
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'))
 
+// added GET===============================================================================
+app.get('/', (req, res) => {  // request
+  db.collection('messages').find().toArray((err, result) => { // goes to database, finds messages
+    if (err) return console.log(err)
+    res.render('index.ejs', {messages: result}) // renders html file
+  })
+})
+// added POST ==============================================================================
+app.post('/messages', (req, res) => {
+  db.collection('messages').insertOne({name: req.body.name, msg: req.body.msg, thumbUp: 0,
+     thumbDown:0}, (err, result) => {
+    if (err) return console.log(err)
+    console.log('saved to database')
+    res.redirect('/')
+  })
+})
+// PUT THUMB UP=========================================================================================
+app.put('/thumbUp', (req, res) => {
+  db.collection('messages')
+    .findOneAndUpdate(
+      { name: req.body.name, msg: req.body.msg },
+      {
+        $inc: { thumbUp: 1 }  // Increment thumbUp by 1
+      },
+      {
+        sort: { _id: 1 },
+        upsert: true
+      },
+      (err, result) => {
+        if (err) return res.send(err);
+        res.send(result);
+      }
+    );
+});
 
-app.set('view engine', 'ejs'); // set up ejs for templating
+// PUT THUMB DOWN==========================================================================================
+app.put('/thumbDown', (req, res) => {
+  db.collection('messages')
+    .findOneAndUpdate(
+      { name: req.body.name, msg: req.body.msg },
+      {
+        $inc: { thumbUp: -1 }  // Increment thumbDown by 1
+      },
+      {
+        sort: { _id: 1 },
+        upsert: true
+      },
+      (err, result) => {
+        if (err) return res.send(err);
+        res.send(result);
+      }
+    );
+});
+
+//===========================================================================================
+app.delete('/messages', (req, res) => {
+  db.collection('messages').findOneAndDelete({name: req.body.name, msg: req.body.msg}, (err, result) => {  
+    if (err) return res.send(500, err)
+    res.send('Message deleted!')
+  })
+})
+//==========================================================================================
+
+app.set('view engine', 'ejs'); // set up ejs for templating   .inc instead of set
 
 // required for passport
 app.use(session({

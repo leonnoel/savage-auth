@@ -1,3 +1,4 @@
 {
-    "terminal.integrated.fontSize": 26
+    "terminal.integrated.fontSize": 16,
+    "r.lsp.promptToInstall": false
 }

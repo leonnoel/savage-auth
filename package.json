@@ -1,5 +1,5 @@
 {
-  "name": "node-authentication",
+  "name": "authentication",
   "main": "server.js",
   "dependencies": {
     "bcrypt": "*",
@@ -7,8 +7,9 @@
     "body-parser": "^1.18.3",
     "connect-flash": "~0.1.1",
     "cookie-parser": "~1.4.3",
-    "ejs": "~2.5.2",
-    "express": "^4.16.4",
+    "cors": "^2.8.5",
+    "ejs": "^3.1.10",
+    "express": "^4.21.1",
     "express-session": "^1.15.6",
     "lodash": "^4.17.20",
     "method-override": "~2.3.6",
@@ -16,10 +17,19 @@
     "mongoose": "^5.12.1",
     "morgan": "^1.9.1",
     "mpath": ">=0.5.1",
-    "passport": "~0.3.2",
+    "passport": "^0.7.0",
     "passport-facebook": "~2.1.1",
     "passport-google-oauth": "~1.0.0",
     "passport-local": "~1.0.0",
     "passport-twitter": "^0.1.5"
-  }
+  },
+  "version": "1.0.0",
+  "description": "1. Clone repo\r 2. run `npm install`",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
