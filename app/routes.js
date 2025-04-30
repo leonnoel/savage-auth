@@ -58,6 +58,27 @@ module.exports = function(app, passport, db) {
       })
     })
 
+    //thumbs down from Savage demo
+app.put('/decrease', (req, res) => {
+  db.collection('messages')
+  .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
+    $inc: {
+      thumbUp: -1
+    }
+  }, {
+    sort: {_id: -1},
+    upsert: true
+  }, (err, result) => {
+    if (err) return res.send(err)
+    res.send(result)
+  })
+})
+
+
+
+
+
+
 // =============================================================================
 // AUTHENTICATE (FIRST LOGIN) ==================================================
 // =============================================================================
