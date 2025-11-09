@@ -1,13 +1,14 @@
-## Installation
+Project: Savage-auth
 
-1. Clone repo
-2. run `npm install`
+Savage Auth is a full-stack web application designed for 21 Savage fans, where users can send messages, like or dislike messages, and delete their messages.
 
-## Usage
+How It's Made: 
+Tech used: HTML, CSS, JavaScript, Node.js, Express.js, and MongoDB
 
-1. run `node server.js`
-2. Navigate to `localhost:8080`
+Lessons Learned: I learned how to the request and respond functions works.
 
-## Credit
 
-Modified from Scotch.io's auth tutorial
+<img width="1098" height="488" alt="Screenshot 2025-11-07 at 2 33 46 PM" src="https://github.com/user-attachments/assets/1cbee87b-afc9-41b6-b0d0-cecab44511d8" />
+
+
+Find the live project here: https://savage-auth-9qzv.onrender.com
