@@ -37,18 +37,26 @@ module.exports = function(app, passport, db) {
     })
 
     app.put('/messages', (req, res) => {
+      let thumbLogic
+      if (Object.keys(req.body)[2] == 'thumbUp') {
+        thumbLogic = req.body.thumbUp + 1
+        // Create conditional to toggle between put for thumbUp and thumbDown
+      } else if (Object.keys(req.body)[2] == 'thumbDown'){
+        thumbLogic = req.body.thumbDown - 1
+      }
+      console.log(thumbLogic)
       db.collection('messages')
-      .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
-        $set: {
-          thumbUp:req.body.thumbUp + 1
-        }
-      }, {
-        sort: {_id: -1},
-        upsert: true
-      }, (err, result) => {
-        if (err) return res.send(err)
-        res.send(result)
-      })
+        .findOneAndUpdate({ name: req.body.name, msg: req.body.msg }, {
+          $set: {
+            thumbUp: thumbLogic
+          }
+        }, {
+          sort: { _id: -1 },
+          upsert: true
+        }, (err, result) => {
+          if (err) return res.send(err)
+          res.send(result)
+        })
     })
 
     app.delete('/messages', (req, res) => {
