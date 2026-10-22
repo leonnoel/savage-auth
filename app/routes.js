@@ -43,8 +43,8 @@ module.exports = function(app, passport, db) {
           thumbUp:req.body.thumbUp + 1
         }
       }, {
-        sort: {_id: -1},
-        upsert: true
+        sort: {_id: -1}, // sorts the response 
+        upsert: true // create record if not found 
       }, (err, result) => {
         if (err) return res.send(err)
         res.send(result)

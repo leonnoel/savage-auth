@@ -1,16 +1,19 @@
-// server.js
+  // server.js
 
 // set up ======================================================================
 // get all the tools we need
-var express  = require('express');
-var app      = express();
-var port     = process.env.PORT || 8080;
+var express  = require('express'); // pkg's needed for program to run - client & user 
+var app      = express(); // shortcut to the app 
+var port     = process.env.PORT || 8080; //
 const MongoClient = require('mongodb').MongoClient
-var mongoose = require('mongoose');
-var passport = require('passport');
-var flash    = require('connect-flash');
 
-var morgan       = require('morgan');
+//var db, collection; 
+
+var mongoose = require('mongoose'); // is a cloud
+var passport = require('passport'); //
+var flash    = require('connect-flash'); // store msg's 
+
+var morgan       = require('morgan'); // a `logger` "better than console.log()"
 var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
 var session      = require('express-session');
@@ -26,7 +29,7 @@ mongoose.connect(configDB.url, (err, database) => {
   require('./app/routes.js')(app, passport, db);
 }); // connect to our database
 
-require('./config/passport')(passport); // pass passport for configuration
+require('./config/passport')(passport); // pass passport for configuration -- To follow information as it passes through from frontend to backend
 
 // set up our express application
 app.use(morgan('dev')); // log every request to the console
