@@ -21,10 +21,11 @@ module.exports = function(passport) {
     });
 
     // used to deserialize the user
+    // mongoose 7+ queries return promises instead of taking callbacks
     passport.deserializeUser(function(id, done) {
-        User.findById(id, function(err, user) {
-            done(err, user);
-        });
+        User.findById(id)
+            .then(user => done(null, user))
+            .catch(err => done(err));
     });
 
  	// =========================================================================
@@ -43,10 +44,7 @@ module.exports = function(passport) {
 
 		// find a user whose email is the same as the forms email
 		// we are checking to see if the user trying to login already exists
-        User.findOne({ 'local.email' :  email }, function(err, user) {
-            // if there are any errors, return the error
-            if (err)
-                return done(err);
+        User.findOne({ 'local.email' :  email }).then(function(user) {
 
             // check to see if theres already a user with that email
             if (user) {
@@ -62,13 +60,14 @@ module.exports = function(passport) {
                 newUser.local.password = newUser.generateHash(password); // use the generateHash function in our user model
 
 				// save the user
-                newUser.save(function(err) {
-                    if (err)
-                        throw err;
+                return newUser.save().then(function() {
                     return done(null, newUser);
                 });
             }
 
+        }).catch(function(err) {
+            // if there are any errors, return the error
+            return done(err);
         });
 
     }));
@@ -89,10 +88,7 @@ module.exports = function(passport) {
 
         // find a user whose email is the same as the forms email
         // we are checking to see if the user trying to login already exists
-        User.findOne({ 'local.email' :  email }, function(err, user) {
-            // if there are any errors, return the error before anything else
-            if (err)
-                return done(err);
+        User.findOne({ 'local.email' :  email }).then(function(user) {
 
             // if no user is found, return the message
             if (!user)
@@ -104,6 +100,9 @@ module.exports = function(passport) {
 
             // all is well, return successful user
             return done(null, user);
+        }).catch(function(err) {
+            // if there are any errors, return the error
+            return done(err);
         });
 
     }));

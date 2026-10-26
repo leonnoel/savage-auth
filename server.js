@@ -20,11 +20,14 @@ var configDB = require('./config/database.js');
 var db
 
 // configuration ===============================================================
-mongoose.connect(configDB.url, (err, database) => {
-  if (err) return console.log(err)
-  db = database
-  require('./app/routes.js')(app, passport, db);
-}); // connect to our database
+// mongoose 7+ no longer accepts a callback here, so wait on the promise instead.
+// db is the native MongoDB driver database the message routes use.
+mongoose.connect(configDB.url)
+  .then(() => {
+    db = mongoose.connection.db
+    require('./app/routes.js')(app, passport, db);
+  })
+  .catch(err => console.log(err)); // connect to our database
 
 require('./config/passport')(passport); // pass passport for configuration
 
