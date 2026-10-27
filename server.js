@@ -2,28 +2,28 @@
 
 // set up ======================================================================
 // get all the tools we need
-var express  = require('express');
-var app      = express();
-var port     = process.env.PORT || 8080;
-const MongoClient = require('mongodb').MongoClient
-var mongoose = require('mongoose');
-var passport = require('passport');
-var flash    = require('connect-flash');
+let express  = require('express');
+let app      = express();
+let port     = process.env.PORT || 8080;
+const {ObjectId} = require('mongodb') // object destructuring to get the objects id
+let mongoose = require('mongoose');
+let passport = require('passport');
+let flash    = require('connect-flash');
 
-var morgan       = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser   = require('body-parser');
-var session      = require('express-session');
+let morgan       = require('morgan');
+let cookieParser = require('cookie-parser');
+let bodyParser   = require('body-parser');
+let session      = require('express-session');
 
-var configDB = require('./config/database.js');
+let configDB = require('./config/database.js');
 
-var db
+let db
 
 // configuration ===============================================================
 mongoose.connect(configDB.url, (err, database) => {
   if (err) return console.log(err)
   db = database
-  require('./app/routes.js')(app, passport, db);
+  require('./app/routes.js')(app, passport, db, ObjectId);//
 }); // connect to our database
 
 require('./config/passport')(passport); // pass passport for configuration
