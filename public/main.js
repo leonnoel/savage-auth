@@ -1,45 +1,70 @@
-var thumbUp = document.getElementsByClassName("fa-thumbs-up");
-var trash = document.getElementsByClassName("fa-trash");
+let thumbUpIcon = document.getElementsByClassName("fa-thumbs-up");
+let thumbdDownIcon = document.getElementsByClassName("fa-thumbs-down");
+let trashIcon = document.getElementsByClassName("fa-trash");
 
-Array.from(thumbUp).forEach(function(element) {
-      element.addEventListener('click', function(){
-        const name = this.parentNode.parentNode.childNodes[1].innerText
-        const msg = this.parentNode.parentNode.childNodes[3].innerText
-        const thumbUp = parseFloat(this.parentNode.parentNode.childNodes[5].innerText)
-        fetch('messages', {
-          method: 'put',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({
-            'name': name,
-            'msg': msg,
-            'thumbUp':thumbUp
-          })
-        })
-        .then(response => {
-          if (response.ok) return response.json()
-        })
-        .then(data => {
-          console.log(data)
-          window.location.reload(true)
-        })
-      });
+Array.from(thumbUpIcon).forEach(function (element) {
+  element.addEventListener('click', function () {
+    const dataSetID = this.parentNode.parentNode.childNodes[1].dataset.msgId
+    console.log(dataSetID)
+    const counter = parseFloat(this.parentNode.parentNode.childNodes[5].innerText)
+    fetch('counterIncrease', {
+      method: 'put',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        'counter': counter,
+        'quoteID': dataSetID
+      })
+    })
+      .then(response => {
+        if (response.ok) return response.json()
+      })
+      .then(data => {
+        console.log(data)
+        // Use DOM to .removeChild
+        window.location.reload(true)
+      })
+  });
 });
 
-Array.from(trash).forEach(function(element) {
-      element.addEventListener('click', function(){
-        const name = this.parentNode.parentNode.childNodes[1].innerText
-        const msg = this.parentNode.parentNode.childNodes[3].innerText
-        fetch('messages', {
-          method: 'delete',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            'name': name,
-            'msg': msg
-          })
-        }).then(function (response) {
-          window.location.reload()
-        })
-      });
+Array.from(thumbdDownIcon).forEach(function (element) {
+  element.addEventListener('click', function () {
+    const dataSetID = this.parentNode.parentNode.childNodes[1].dataset.msgId
+    const counter = parseFloat(this.parentNode.parentNode.childNodes[5].innerText)
+    fetch('counterDecrease', {
+      method: 'put',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        'counter': counter,
+        'quoteID': dataSetID
+      })
+    })
+      .then(response => {
+        if (response.ok) return response.json()
+      })
+      .then(data => {
+        console.log(data)
+        window.location.reload(true)
+      })
+  });
+});
+
+Array.from(trashIcon).forEach(function (element) {
+  element.addEventListener('click', function () {
+    const dataSetID = this.parentNode.parentNode.childNodes[1].dataset.msgId
+    // const name = this.parentNode.parentNode.childNodes[1].innerText
+    // const msg = this.parentNode.parentNode.childNodes[3].innerText
+    fetch('deleteQuote', {
+      method: 'delete',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        // 'name': name,
+        // 'msg': msg,
+        'quoteID': dataSetID
+      })
+    }).then(function (response) {
+      window.location.reload()
+    })
+  });
 });

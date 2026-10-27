@@ -2,28 +2,31 @@
 
 // set up ======================================================================
 // get all the tools we need
-var express  = require('express');
-var app      = express();
-var port     = process.env.PORT || 8080;
+require('dotenv').config();
+const express  = require('express');
+const app      = express();
+const port     = process.env.PORT || 8000;
 const MongoClient = require('mongodb').MongoClient
-var mongoose = require('mongoose');
-var passport = require('passport');
-var flash    = require('connect-flash');
+const { ObjectID } = require('mongodb');
+const mongoose = require('mongoose');
+const passport = require('passport');
+const flash    = require('connect-flash');
 
-var morgan       = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser   = require('body-parser');
-var session      = require('express-session');
+const morgan       = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser   = require('body-parser');
+const session      = require('express-session');
 
-var configDB = require('./config/database.js');
-
-var db
+// const configDB = require('./config/database.js');
+const configDB = {"url":process.env.MONGODB_URI}
+console.log(configDB)
+let db
 
 // configuration ===============================================================
 mongoose.connect(configDB.url, (err, database) => {
   if (err) return console.log(err)
   db = database
-  require('./app/routes.js')(app, passport, db);
+  require('./app/routes.js')(app, passport, db, ObjectID);
 }); // connect to our database
 
 require('./config/passport')(passport); // pass passport for configuration
