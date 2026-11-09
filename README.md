@@ -9,8 +9,8 @@ Like & Dislike: Interact with messages using the thumbs-up and thumbs-down butto
 Delete Messages: Remove messages from the board when needed.
 Explore the application and get hands-on experience working with authentication, backend logic, and full-stack functionality!
 
-![screenshot of front page of login](/public/img/loginSavage.png)
-![screenshot of the profile page](/public/img/profileSavage.png)
+<img width="1743" height="872" alt="Screenshot 2026-11-09 at 1 17 02 AM" src="https://github.com/user-attachments/assets/eba2d54f-4612-454b-ae29-85d52bbecce0" />
+
 
 ## Features
 - Frontend: HTML, CSS, JavaScript
